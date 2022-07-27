@@ -4,10 +4,23 @@ services:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
-      - /PATH_TO_YOUR_CONFIG:/config
+      - /docker/homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+  mosquitto:
+    container_name: mosquitto-tst
+    image: "eclipse-mosquitto:latest"
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - /docker/mosquitto/config:/mosquitto/config
+      - /docker/mosquitto/data:/mosquitto/data
+      - /docker/mosquitto/log:/mosquitto/log
     restart: unless-stopped
     privileged: true
     network_mode: host
