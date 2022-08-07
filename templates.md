@@ -87,6 +87,14 @@ Subtraction
 ```
 {% set outside_temp = state_attr('climate.thermostat', 'current_temperature') %}
 {% set inside_temp = states('sensor.oc_temp_upstairs_temperature') %}
+{% set difference = (outside_temp | float - inside_temp | float) %}
+{{ difference }}
+```
+
+Greater than or less than
+```
+{% set outside_temp = state_attr('climate.thermostat', 'current_temperature') %}
+{% set inside_temp = states('sensor.oc_temp_upstairs_temperature') %}
 {% set difference = (outside_temp | float < inside_temp | float) %}
 {{ difference }}
 ```
