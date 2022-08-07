@@ -58,9 +58,9 @@ The AC is off
 If with And/Or Logic
 ```
 {% if 
-is_state('binary_sensor.oc_contact_bedroom_01_window_01_contact', 'on') 
-or is_state('binary_sensor.oc_contact_bedroom_01_window_02_contact', 'on')
-or is_state('binary_sensor.oc_contact_livingroom_window_01_contact', 'on')
+is_state('binary_sensor.oc_contact_bedroom_00_window_01_contact', 'on') 
+or is_state('binary_sensor.oc_contact_bedroom_00_window_02_contact', 'on')
+or is_state('binary_sensor.oc_contact_livingroom_window_00_contact', 'on')
 or is_state('binary_sensor.oc_contact_door_patio_contact', 'on')
 or is_state('binary_sensor.oc_contact_office_window_contact', 'off')
 %}
@@ -68,14 +68,14 @@ or is_state('binary_sensor.oc_contact_office_window_contact', 'off')
 ```
 ```
 {% if 
-is_state('binary_sensor.oc_contact_bedroom_01_window_01_contact', 'off') 
+is_state('binary_sensor.oc_contact_bedroom_00_window_01_contact', 'off') 
 and if is_state('climate.thermostat', 'cool') %}
 {% endif %}
 ```
 Nested If
 ```
 {% if 
-is_state('binary_sensor.oc_contact_bedroom_01_window_01_contact', 'on') 
+is_state('binary_sensor.oc_contact_bedroom_00_window_01_contact', 'on') 
 %}
   {% if is_state('climate.thermostat', 'cool') %}
     A window or door is open and the AC is on
@@ -94,18 +94,18 @@ Filter (To Upper or To Lower)
 ```
 State of an Entity
 ```
-{{ states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state }}
+{{ states.binary_sensor.oc_contact_bedroom_00_window_01_contact.state }}
 ```
 Is State of an Entity Equal to 'x'
 ```
-{{ is_state('states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state', "off") }}
+{{ is_state('states.binary_sensor.oc_contact_bedroom_00_window_01_contact.state', "off") }}
 ```
 ### Snippets
 Show the state of an entity
 ```
-{{ states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state }}
-{{ states.binary_sensor.oc_contact_bedroom_01_window_02_contact.state }}
-{{ states.binary_sensor.oc_contact_livingroom_window_01_contact.state }}
+{{ states.binary_sensor.oc_contact_bedroom_00_window_01_contact.state }}
+{{ states.binary_sensor.oc_contact_bedroom_00_window_02_contact.state }}
+{{ states.binary_sensor.oc_contact_livingroom_window_00_contact.state }}
 {{ states.binary_sensor.oc_contact_door_patio_contact.state }}
 {{ states.binary_sensor.oc_contact_office_window_contact.state }}
 {{ states.climate.thermostat.state }}
@@ -114,9 +114,9 @@ Show the state of an entity
 Alert if there is a door or window open when the AC is on
 ```
 {% if 
-is_state('binary_sensor.oc_contact_bedroom_01_window_01_contact', 'on') 
-or is_state('binary_sensor.oc_contact_bedroom_01_window_02_contact', 'on')
-or is_state('binary_sensor.oc_contact_livingroom_window_01_contact', 'on')
+is_state('binary_sensor.oc_contact_bedroom_00_window_01_contact', 'on') 
+or is_state('binary_sensor.oc_contact_bedroom_00_window_02_contact', 'on')
+or is_state('binary_sensor.oc_contact_livingroom_window_00_contact', 'on')
 or is_state('binary_sensor.oc_contact_door_patio_contact', 'on')
 or is_state('binary_sensor.oc_contact_office_window_contact', 'off')
 %}
