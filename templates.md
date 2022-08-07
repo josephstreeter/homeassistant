@@ -1,5 +1,37 @@
 ## Templates
-###Conditions
+### View Entities
+List the attributes of an Entity
+```
+{{ states.light.kitchen_sink_light.attributes }}
+```
+View the value of an attribute
+```
+{{ state_attr('light.kitchen_sink_light', 'friendly_name') }}
+```
+State of an Entity
+```
+{{ states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state }}
+```
+Is State of an Entity Equal to 'x'
+```
+{{ is_state('states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state', "off") }}
+```
+
+### Manipulate Text
+Capitalize
+{{ states('light.kitchen_sink_light') | capitalize}}
+
+To Upper
+```
+{{ states('light.kitchen_sink_light') | upper}
+
+```
+To Lower
+```
+{{ states('light.kitchen_sink_light') | lower}
+
+```
+### Conditions
 For
 ```
 {%- for light in states.light -%}
@@ -63,24 +95,7 @@ is_state('binary_sensor.oc_contact_bedroom_01_window_01_contact', 'on')
   {% endif %}
 {% endif %}
 ```
-Filter (To Upper or To Lower)
-```
-{% filter upper %}
-    This text becomes uppercase
-{% endfilter %}
 
-{% filter lower %}
-    This TEXT Becomes Lowercase
-{% endfilter %}
-```
-State of an Entity
-```
-{{ states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state }}
-```
-Is State of an Entity Equal to 'x'
-```
-{{ is_state('states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state', "off") }}
-```
 ### Snippets
 Show the state of an entity
 ```
