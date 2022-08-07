@@ -9,18 +9,22 @@ or
 ```
 {{ states('sensor.oc_temp_upstairs_temperature') }}
 ```
+
 Is State of an Entity Equal to 'x'
 ```
 {{ is_state('states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state', "off") }}
 ```
+
 List the attributes of an Entity
 ```
 {{ states.light.kitchen_sink_light.attributes }}
 ```
+
 View the value of an attribute
 ```
 {{ state_attr('light.kitchen_sink_light', 'friendly_name') }}
 ```
+
 ### Manipulate Text
 Capitalize
 ```
@@ -59,11 +63,17 @@ Set Variable
 ```
 {% set outside_temp = state_attr('climate.thermostat', 'current_temperature') %}
 ```
+
 Print variable
 ```
 {{ outside_temp }}
 ```
+
 Create an Array
+```
+{% set my_array = (1,2,4,5) %}
+```
+Create an Array from HA data
 ```
 {% set output = namespace(sensors=[]) %}
 {% for state in states.sensor %}
@@ -80,6 +90,7 @@ Subtraction
 {% set difference = (outside_temp | float < inside_temp | float) %}
 {{ difference }}
 ```
+
 Average
 ```
 {% set outside_temp = state_attr('climate.thermostat', 'current_temperature') %}
@@ -87,6 +98,7 @@ Average
 {% set average = (((outside_temp | float + inside_temp | float)) / 2) | round(2)%}
 {{ average }}
 ```
+
 ### Conditions
 For
 ```
@@ -117,6 +129,7 @@ For (filtered)
     {{ light.entity_id }},
 {%- endfor -%}
 ```
+
 Assign results of loop to an array
 ```
 {% set output = namespace(sensors=[]) %}
@@ -125,6 +138,7 @@ Assign results of loop to an array
 {% endfor %}
 {{ output.sensors }}
 ```
+
 If/Else
 ```
 {% if is_state('climate.thermostat', 'cool') %}
@@ -140,6 +154,7 @@ The AC is on
 The AC is off
 {% endif %}
 ```
+
 If with And/Or Logic
 ```
 {% if 
@@ -151,12 +166,14 @@ or is_state('binary_sensor.oc_contact_office_window_contact', 'off')
 %}
 {% endif %}
 ```
+or
 ```
 {% if 
 is_state('binary_sensor.oc_contact_bedroom_01_window_01_contact', 'off') 
 and if is_state('climate.thermostat', 'cool') %}
 {% endif %}
 ```
+
 Nested If
 ```
 {% if 
@@ -202,4 +219,8 @@ Show a filtered list of entities
   |map(attribute='entity_id')
   |list  
 }}
+```
+Show all entities from an integraion
+```
+{{ integration_entities('mqtt') }}
 ```
