@@ -1,5 +1,18 @@
 ## Templates
 ### View Entities
+
+State of an Entity
+```
+{{ states.sensor.oc_temp_upstairs_temperature.state }}
+```
+or
+```
+{{ states('sensor.oc_temp_upstairs_temperature') }}
+```
+Is State of an Entity Equal to 'x'
+```
+{{ is_state('states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state', "off") }}
+```
 List the attributes of an Entity
 ```
 {{ states.light.kitchen_sink_light.attributes }}
@@ -8,28 +21,71 @@ View the value of an attribute
 ```
 {{ state_attr('light.kitchen_sink_light', 'friendly_name') }}
 ```
-State of an Entity
-```
-{{ states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state }}
-```
-Is State of an Entity Equal to 'x'
-```
-{{ is_state('states.binary_sensor.oc_contact_bedroom_01_window_01_contact.state', "off") }}
-```
-
 ### Manipulate Text
 Capitalize
+```
 {{ states('light.kitchen_sink_light') | capitalize}}
+```
 
 To Upper
 ```
 {{ states('light.kitchen_sink_light') | upper}
 
 ```
+
 To Lower
 ```
 {{ states('light.kitchen_sink_light') | lower}
 
+```
+
+Concatination
+```
+{% for state in states.sensor %}
+{{state.name ~ '=' ~ state.state }}
+{% endfor %}
+```
+
+Join
+```
+{% set output = namespace(sensors=[]) %}
+{% for state in states.sensor %}
+{% set output.sensors = output.sensors + [state.name ~ "(" ~ state.state ~ ")"] %}
+{% endfor %}
+{{ output.sensors | join(',') }}
+```
+### Variables
+Set Variable
+```
+{% set outside_temp = state_attr('climate.thermostat', 'current_temperature') %}
+```
+Print variable
+```
+{{ outside_temp }}
+```
+Create an Array
+```
+{% set output = namespace(sensors=[]) %}
+{% for state in states.sensor %}
+{% set output.sensors = output.sensors + [state.name] %}
+{% endfor %}
+{{ output.sensors }}
+```
+
+### Math
+Subtraction
+```
+{% set outside_temp = state_attr('climate.thermostat', 'current_temperature') %}
+{% set inside_temp = states('sensor.oc_temp_upstairs_temperature') %}
+{% set difference = (outside_temp | float < inside_temp | float) %}
+{{ difference }}
+```
+Average
+```
+{% set outside_temp = state_attr('climate.thermostat', 'current_temperature') %}
+{% set inside_temp = states('sensor.oc_temp_upstairs_temperature') %}
+{% set average = (((outside_temp | float + inside_temp | float)) / 2) | round(2)%}
+{{ average }}
 ```
 ### Conditions
 For
@@ -40,19 +96,35 @@ For
   {%- endif -%}
 {%- endfor -%}
 ```
+or 
+```
+{% set output = namespace(sensors=[]) %}
+{% for state in states.sensor %}
+{{ state.entity_id }} = {{ state.state }}
+{% endfor %}
+```
+
 For (Print Index)
 ```
 {%- for light in states.light if light.state == 'off'-%}
     {{loop.index}} - {{ light.entity_id }}
 {% endfor %}
 ```
+
 For (filtered)
 ```
 {%- for light in states.light if light.state == 'off'-%}
     {{ light.entity_id }},
 {%- endfor -%}
 ```
-
+Assign results of loop to an array
+```
+{% set output = namespace(sensors=[]) %}
+{% for state in states.sensor %}
+{% set output.sensors = output.sensors + [state.name ~ ',' ~ state.state] %}
+{% endfor %}
+{{ output.sensors }}
+```
 If/Else
 ```
 {% if is_state('climate.thermostat', 'cool') %}
