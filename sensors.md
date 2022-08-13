@@ -1,6 +1,6 @@
-# Sensors
+## Sensors
 
-## Time of Day
+### Time of Day
 
 ```
 - platform: tod
@@ -14,7 +14,7 @@
   before: '06:00'
 ```
 
-## Workday
+### Workday
 ```
 - platform: workday
   country: US
@@ -22,7 +22,7 @@
   workdays: [mon, tue, wed, thu, fri]
 ```
 
-## History Stats
+### History Stats
 ```
 - platform: history_stats
   name: Lamp on today
@@ -41,7 +41,7 @@
   duration:
     days: 7
 ```
-## Utility
+### Utility
 ```
 - platform: history_stats
   name: Front Door Motion
@@ -60,7 +60,7 @@ utility_meter:
     cycle: daily
 ```
 
-## Rest API
+### Rest API
 ```
 binary_sensor:
   - platform: template
