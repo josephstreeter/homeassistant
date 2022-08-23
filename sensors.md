@@ -1,5 +1,18 @@
 ## Sensors
 
+### Template Sensor
+```
+template:
+  - sensor:
+      - name: "Average temperature"
+        unit_of_measurement: "°C"
+        state: >
+          {% set bedroom = states('sensor.bedroom_temperature') | float %}
+          {% set kitchen = states('sensor.kitchen_temperature') | float %}
+
+          {{ ((bedroom + kitchen) / 2) | round(1, default=0) }}
+```
+
 ### Time of Day
 
 ```
