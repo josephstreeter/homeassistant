@@ -2,7 +2,28 @@
 
 ### Template Sensor
 ```
-template:
+- sensor:
+    - name: "AC_On_Window_Open
+      state: >
+         {% if states.binary_sensor.windows.state == 'off' and states.climate.thermostat.state == 'cool'-%}
+         true
+         {%- else -%}
+         false
+         {%- endif %}
+
+```
+```
+- sensor:
+   - name: "outdoor_temp"
+     state: >
+       {% if (state_attr('climate.thermostat', 'current_temperature') | float <= states('sensor.oc_temp_upstairs_temperature') | float) %}
+       Open Windows
+       {% else %}
+       Close Windows
+       {% endif %}
+
+```
+```
   - sensor:
       - name: "Average temperature"
         unit_of_measurement: "°C"
