@@ -1,7 +1,7 @@
 version: '3'
 services:
   homeassistant:
-    container_name: ha-tst
+    container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     ports:
       - 8123:8124
@@ -15,7 +15,7 @@ services:
     network_mode: host
 
   mosquitto:
-    container_name: mqtt-tst
+    container_name: mqtt
     image: "eclipse-mosquitto:latest"
     ports:
       - 1883:1883
@@ -28,7 +28,7 @@ services:
     privileged: true
 
   zigbee2mqtt:
-    container_name: z2m
+    container_name: zigbee2mqtt
     restart: unless-stopped
     image: koenkk/zigbee2mqtt
     volumes:
