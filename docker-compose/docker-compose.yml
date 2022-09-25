@@ -1,8 +1,10 @@
 version: '3'
 services:
   homeassistant:
-    container_name: homeassistant
+    container_name: ha-tst
     image: "ghcr.io/home-assistant/home-assistant:stable"
+    ports:
+      - 8123:8124
     volumes:
       - /docker/homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
@@ -11,8 +13,9 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: host
+
   mosquitto:
-    container_name: mosquitto-tst
+    container_name: mqtt-tst
     image: "eclipse-mosquitto:latest"
     ports:
       - 1883:1883
@@ -23,4 +26,28 @@ services:
       - /docker/mosquitto/log:/mosquitto/log
     restart: unless-stopped
     privileged: true
-    network_mode: host
+
+  zigbee2mqtt:
+    container_name: z2m
+    restart: unless-stopped
+    image: koenkk/zigbee2mqtt
+    volumes:
+      - /docker/zigbee2mqtt/data:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=America/Chicago
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+
+  node-red:
+    container_name: node-red
+    image: nodered/node-red:latest
+    environment:
+      - TZ=America/Chicago
+    ports:
+      - "1880:1880"
+    volumes:
+      - /docker/node-red/:/data
+(END)
