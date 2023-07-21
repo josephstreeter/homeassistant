@@ -6,6 +6,7 @@
 - Home Assistant
 - Mosquitto MQTT
 - Zigbee MQTT
+- https://github.com/Koenkk/zigbee2mqtt/issues/10858#issuecomment-1291567559
 
 ## Deployment
 Docker Compose
